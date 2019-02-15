@@ -36,9 +36,7 @@ activiti-cloud-modeling:
 
 application:
   runtime-bundle:
-    enabled: true
-    image:
-      pullPolicy: Always
+    enabled: false
     # extraEnv: |
     #   - name: ACTIVITI_SECURITY_POLICIES_0_NAME
     #     value: "HR Group restricted to SimpleProcess and ConnectorProcess"
@@ -87,18 +85,13 @@ application:
     #     value: "*"
 
   activiti-cloud-connector:
-    enabled: true
-    image:
-      pullPolicy: Always
+    enabled: false
 
   activiti-cloud-notifications-graphql:
     enabled: true
-    image:
-      pullPolicy: Always
 
   activiti-cloud-audit:
-    image:
-      pullPolicy: Always
+    enabled: true
     # extraEnv: |
     #   - name: ACTIVITI_SECURITY_POLICIES_0_NAME
     #     value: "HR Group restricted to SimpleProcess and ConnectorProcess"
