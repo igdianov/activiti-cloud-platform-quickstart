@@ -2,7 +2,7 @@
 
 Activiti Cloud Platform Quickstart for Jenkins-X CI/CD pipelines
 
-### Follow the steps to  Activiti Cloud GitOps environment for Jenkins-X CI/CD pipelines
+### How To Use
 
 We will need to use Jx Quickstart commands to create our own Activiti Cloud Platform Chart from published quickstart template in https://github/activiti organization repository
 
