@@ -126,6 +126,11 @@ activiti-cloud-audit:
 
 activiti-cloud-identity:
   enabled: true
+  alfresco-identity-service:
+    keycloak:
+      postgresql:
+        persistence:
+          existingClaim: "" # use default postgresql PVC fix for Helm 2.14+
 
 activiti-cloud-gateway:
   service:
