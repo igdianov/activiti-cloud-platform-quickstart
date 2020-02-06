@@ -133,7 +133,7 @@ rabbitmq:
       memory: 2048Mi
   rbac:
     create: true
-  replicaCount: 2
+  replicaCount: 1
   ingress:
     enabled: true
     hostName: "rabbitmq.staging.cloud.introproventures.com"
