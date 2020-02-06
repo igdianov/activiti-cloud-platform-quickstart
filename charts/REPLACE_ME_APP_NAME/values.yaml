@@ -64,43 +64,11 @@ global:
     # http: *http ## Sync with Jx expose controller http conig
     # tlsacme: *tlsacme ## Sync with Jx expose controller tlsacme conig
 
-activiti-cloud-modeling:
-  enabled: true
-  service:
-    name: modeling
-  frontend:  
-    image:
-      repository: activiti/activiti-modeling-app
-      tag: 7.1.0.M3.1
-      pullPolicy: Always
-  backend:    
-    image:
-      repository: activiti/activiti-cloud-modeling
-      tag: 7.1.0.M3.1
-      pullPolicy: Always
-
-  ingress:
-    enabled: false
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/enable-cors: "true"
-      nginx.ingress.kubernetes.io/cors-allow-headers: "*"
-      nginx.ingress.kubernetes.io/x-forwarded-prefix: "true"
-    frontend:
-      basepath: "/modeling"
-      annotations: {}
-    backend:
-      prefix: "modeling-service"
-      image:
-      annotations: {}
-    backend:
-      prefix: "modeling-service"
-      annotations: {}
-
 activiti-cloud-query:
   service: 
     name: query
   image:
+    repository: activiti/activiti-cloud-query
     pullPolicy: Always
   postgres:
     enabled: true
@@ -112,7 +80,6 @@ activiti-cloud-notifications-graphql:
   image:
     pullPolicy: Always
     repository: activiti/activiti-cloud-notifications-graphql
-    tag: 7.1.0.M3.1
 
 activiti-cloud-audit:
   service: 
@@ -120,24 +87,17 @@ activiti-cloud-audit:
   image:
     pullPolicy: Always
     repository: activiti/activiti-cloud-audit
-    tag: 7.1.0.M3.1
   postgres:
     enabled: true    
 
 activiti-cloud-identity:
   enabled: true
-  alfresco-identity-service:
-    keycloak:
-      postgresql:
-        persistence:
-          existingClaim: "" # use default postgresql PVC fix for Helm 2.14+
 
 activiti-cloud-gateway:
   service:
     name: activiti-cloud-gateway
   image:
     repository: activiti/activiti-cloud-gateway
-    tag: 7.1.0.M3.1
     pullPolicy: IfNotPresent
   ingress:
     enabled: true
@@ -152,9 +112,11 @@ postgres:
   postgresqlPassword: password
   resources:
     requests:
-      cpu: 350m
-      memory: 512Mi
-
+      cpu: 500m
+      memory: 1024Mi
+  postgresqlExtendedConf:
+    maxConnections: 500
+    
 rabbitmq:
   enabled: true
   service:
@@ -164,21 +126,17 @@ rabbitmq:
   rabbitmqUsername: "guest"
   rabbitmqPassword: "guest"
   rabbitmqErlangCookie: 124567890abcdefghijklmnopqrstuv
-  rabbitmqSTOMPPlugin:
-    enabled: true
+  rabbitmqMemoryHighWatermark: 1500MB
   resources:
-    limits:
-      cpu: 1
-      memory: 2Gi
     requests:
-      cpu: 350m
-      memory: 512Mi
+      cpu: 500m
+      memory: 2048Mi
   rbac:
     create: true
-  replicaCount: 1
+  replicaCount: 2
   ingress:
-    enabled: false
-    #hostName: "rabbitmq.staging.X.X.X.X.nip.io"
+    enabled: true
+    hostName: "rabbitmq.staging.cloud.introproventures.com"
     path: /
     annotations:
       kubernetes.io/ingress.class: nginx
